@@ -1,0 +1,177 @@
+Q.1
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node
+{
+    int data;
+    struct node *next;
+};
+
+struct node *head = NULL;
+
+void create()
+{
+    struct node *newnode, *temp;
+    int n, i;
+
+    printf("Enter number of nodes: ");
+    scanf("%d", &n);
+
+    if (n <= 0)
+    {
+        printf("Invalid number of nodes\n");
+        return;
+    }
+
+    for (i = 0; i < n; i++)
+    {
+        newnode = malloc(sizeof(struct node));
+
+        if (newnode == NULL)
+        {
+            printf("Memory allocation failed\n");
+            return;
+        }
+
+        printf("Enter data: ");
+        scanf("%d", &newnode->data);
+        newnode->next = NULL;
+
+        if (head == NULL)
+            head = newnode;
+        else
+        {
+            temp = head;
+            while (temp->next != NULL)
+                temp = temp->next;
+
+            temp->next = newnode;
+        }
+    }
+}
+
+void display()
+{
+    struct node *temp = head;
+
+    if (head == NULL)
+    {
+        printf("List is empty\n");
+        return;
+    }
+
+    printf("Linked List: ");
+    while (temp != NULL)
+    {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+}
+
+void deleteElement()
+{
+    struct node *temp = head, *prev = NULL;
+    int value;
+
+    if (head == NULL)
+    {
+        printf("List is empty\n");
+        return;
+    }
+
+    printf("Enter element to delete: ");
+    scanf("%d", &value);
+
+    while (temp != NULL && temp->data != value)
+    {
+        prev = temp;
+        temp = temp->next;
+    }
+
+    if (temp == NULL)
+    {
+        printf("Element not found\n");
+        return;
+    }
+
+    if (prev == NULL)
+        head = head->next;
+    else
+        prev->next = temp->next;
+
+    free(temp);
+    printf("Element deleted successfully\n");
+}
+
+int main()
+{
+    int choice;
+
+    do
+    {
+        printf("\n1. Create\n2. Display\n3. Delete element\n0. Exit\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+
+        switch (choice)
+        {
+            case 1: create(); break;
+            case 2: display(); break;
+            case 3: deleteElement(); break;
+            case 0: break;
+            default: printf("Invalid choice\n");
+        }
+    } while (choice != 0);
+
+    return 0;
+}
+
+Q.2
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main()
+{
+    int a[100], n, x, i, found = 0;
+
+    srand(time(NULL));
+
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    if (n <= 0 || n > 100)
+    {
+        printf("Invalid size\n");
+        return 0;
+    }
+
+    printf("Random array: ");
+    for (i = 0; i < n; i++)
+    {
+        a[i] = rand() % 100;
+        printf("%d ", a[i]);
+    }
+
+    printf("\nEnter value to search: ");
+    scanf("%d", &x);
+
+    for (i = 0; i < n; i++)
+    {
+        if (a[i] == x)
+        {
+            printf("Element found at position %d\n", i + 1);
+            found = 1;
+            break;
+        }
+    }
+
+    if (!found)
+        printf("Element not found\n");
+
+    return 0;
+}
