@@ -1,0 +1,141 @@
+Q.1 
+
+#include <stdio.h>
+
+int main()
+{
+    int a[100], n, i, key, found = 0;
+
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    printf("Enter array elements:\n");
+    for (i = 0; i < n; i++)
+        scanf("%d", &a[i]);
+
+    printf("Enter element to search: ");
+    scanf("%d", &key);
+
+    for (i = 0; i < n; i++)
+    {
+        if (a[i] == key)
+        {
+            printf("Element found at position %d\n", i + 1);
+            found = 1;
+            break;
+        }
+    }
+
+    if (found == 0)
+        printf("Element not found\n");
+
+    return 0;
+}
+
+
+Q.2
+
+#include <stdio.h>
+#define MAX 5
+
+int stack[MAX];
+int top = -1;
+
+int isEmpty()
+{
+    return top == -1;
+}
+
+int isFull()
+{
+    return top == MAX - 1;
+}
+
+void Push(int value)
+{
+    if (isFull())
+    {
+        printf("Stack Overflow\n");
+        return;
+    }
+
+    stack[++top] = value;
+    printf("%d pushed into stack\n", value);
+}
+
+void Pop()
+{
+    if (isEmpty())
+    {
+        printf("Stack Underflow\n");
+        return;
+    }
+
+    printf("Popped element: %d\n", stack[top--]);
+}
+
+void Peek()
+{
+    if (isEmpty())
+        printf("Stack is empty\n");
+    else
+        printf("Top element: %d\n", stack[top]);
+}
+
+int main()
+{
+    int choice, value;
+
+    do
+    {
+        printf("\n--- Stack Menu ---\n");
+        printf("1. Push\n");
+        printf("2. Pop\n");
+        printf("3. Peek\n");
+        printf("4. Check Empty\n");
+        printf("5. Check Full\n");
+        printf("6. Exit\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+
+        switch (choice)
+        {
+            case 1:
+                printf("Enter value: ");
+                scanf("%d", &value);
+                Push(value);
+                break;
+
+            case 2:
+                Pop();
+                break;
+
+            case 3:
+                Peek();
+                break;
+
+            case 4:
+                if (isEmpty())
+                    printf("Stack is empty\n");
+                else
+                    printf("Stack is not empty\n");
+                break;
+
+            case 5:
+                if (isFull())
+                    printf("Stack is full\n");
+                else
+                    printf("Stack is not full\n");
+                break;
+
+            case 6:
+                printf("Exiting...\n");
+                break;
+
+            default:
+                printf("Invalid choice\n");
+        }
+    } while (choice != 6);
+
+    return 0;
+}
